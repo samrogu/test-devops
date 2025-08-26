@@ -51,7 +51,7 @@ spec:
             steps{
                 dir('demo-devops-java'){
                     container('kaniko'){
-                        sh '/kaniko/executor --context `pwd` --dockerfile `pwd`/Dockerfile --destination=gcr.io/testdevops-470205/test-devops-java:latest --destination=gcr.io/testdevops-470205/test-devops-java:${BUILD_NUMBER} --cleanup'
+                        sh '/kaniko/executor --context `pwd` --dockerfile `pwd`/Dockerfile --destination=us-central1-docker.pkg.dev/testdevops-470205/test-devops-java:latest --destination=us-central1-docker.pkg.dev/testdevops-470205/test-devops-java:${BUILD_NUMBER} --cleanup'
                     }
                 }
             }
