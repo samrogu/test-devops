@@ -17,11 +17,9 @@ spec:
         limits:
           memory: "1Gi"
     - name: kaniko
-      image: gcr.io/kaniko-project/executor:v1.24.0
-      command:
-        - sleep
-      args:
-        - 9999999
+      image: gcr.io/kaniko-project/executor:debug
+      imagePullPolicy: Always
+      command: ["sleep infinity"]
       imagePullPolicy: Always
       resources:
         requests:
