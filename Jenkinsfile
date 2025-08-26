@@ -19,7 +19,7 @@ spec:
     - name: kaniko
       image: gcr.io/kaniko-project/executor:debug
       imagePullPolicy: Always
-      command: ["sleep infinity"]
+      command: ["tail", "-f", "/dev/null"]  
       imagePullPolicy: Always
       resources:
         requests:
