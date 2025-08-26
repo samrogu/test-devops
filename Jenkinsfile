@@ -16,6 +16,19 @@ spec:
           cpu: "500m"
         limits:
           memory: "1Gi"
+    - name: kaniko
+      image: gcr.io/kaniko-project/executor:v1.24.0
+      command:
+        - sleep
+      args:
+        - 9999999
+      imagePullPolicy: Always
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: "500m"
+        limits:
+          memory: "1Gi"
 '''
     defaultContainer 'maven'
         }
@@ -35,12 +48,11 @@ spec:
                 }
             }
         }
-        stage('Docker Build & Push'){
+        stage('Build and Push Docker Image'){
             steps{
-                script{
-                    dockerImage = docker.build("saguro/devsu-demo-devops-java:${env.BUILD_ID}")
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-credentials'){
-                        dockerImage.push()
+                dir('demo-devops-java'){
+                    container('kaniko'){
+                        sh '/kaniko/executor --context `pwd` --dockerfile `pwd`/Dockerfile --destination=testdevops-470205/test-devops-java:latest --destination=testdevops-470205/test-devops-java:${BUILD_NUMBER} --cleanup'
                     }
                 }
             }
