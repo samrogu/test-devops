@@ -79,9 +79,22 @@ spec:
         stage('Vulnerability Scan - Docker Image'){
             steps{
                 container('trivy'){
-                    sh 'trivy image --severity HIGH,CRITICAL --exit-code 1 --no-progress ${DOCKER_REPO}:${BUILD_NUMBER}'
+                    // trivy image --severity HIGH,CRITICAL --exit-code 1 --no-progress ${DOCKER_REPO}:${BUILD_NUMBER}
+                    sh '''
+                    trivy image --severity HIGH,CRITICAL \
+                    --format template \
+                    --template "@/contrib/html.tpl" \
+                    --output trivy-report.html \
+                    ${DOCKER_REPO}:${BUILD_NUMBER}
+                    '''
                 }
             }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'trivy-report.html', fingerprint: true
+            junit 'demo-devops-java/target/surefire-reports/*.xml'
         }
     }
 }
