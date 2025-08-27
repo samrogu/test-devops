@@ -5,6 +5,7 @@ pipeline{
 apiVersion: v1
 kind: Pod
 spec:
+  serviceAccount: jenkins-wi-gke-test-1
   containers:
     - name: maven
       image: maven:3.9.11-eclipse-temurin-21
@@ -50,7 +51,7 @@ spec:
             steps{
                 dir('demo-devops-java'){
                     container('kaniko'){
-                        sh '/kaniko/executor --context `pwd` --dockerfile `pwd`/Dockerfile --destination=testdevops-470205/test-devops-java:latest --destination=testdevops-470205/test-devops-java:${BUILD_NUMBER} --cleanup'
+                        sh '/kaniko/executor --context `pwd` --dockerfile `pwd`/Dockerfile --destination=us-central1-docker.pkg.dev/testdevops-470205/test-devops-java:latest --destination=us-central1-docker.pkg.dev/testdevops-470205/test-devops-java:${BUILD_NUMBER} --cleanup'
                     }
                 }
             }
