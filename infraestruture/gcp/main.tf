@@ -24,10 +24,21 @@ module "gke" {
   deletion_protection        = false
   http_load_balancing        = true
   service_account            = "create"
-  
+
   identity_namespace         = "${module.project-google-apis.project_id}.svc.id.goog"
   depends_on = [
     module.project-google-apis
   ]
+}
 
+resource "google_artifact_registry_repository" "docker_repo" {
+  provider     = google
+  location     = var.region
+  repository_id = "test-devops-repo"
+  description  = "Repositorio Docker para el proyecto DevOps Java"
+  format       = "DOCKER"
+  labels = {
+    environment = "dev"
+    team        = "devops"
+  }
 }
