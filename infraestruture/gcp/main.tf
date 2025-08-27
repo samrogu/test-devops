@@ -21,6 +21,11 @@ module "gke" {
   horizontal_pod_autoscaling = true
   filestore_csi_driver       = false
   dns_cache                  = false
+  deletion_protection        = false
+  http_load_balancing        = true
+  service_account            = "create"
+  
+  identity_namespace         = "${module.project-google-apis.project_id}.svc.id.goog"
   depends_on = [
     module.project-google-apis
   ]

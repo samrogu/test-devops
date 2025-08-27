@@ -10,7 +10,7 @@ module "workload_identity" {
 }
 
 # enable GSA to add and delete pods for jenkins builders
-resource "google_project_iam_member" "cluster-dev" {
+resource "google_project_iam_member" "cluster" {
   project = module.project-google-apis.project_id
   role    = "roles/container.developer"
   member  = module.workload_identity.gcp_service_account_fqn
