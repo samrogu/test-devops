@@ -31,6 +31,12 @@ module "gke" {
   ]
 }
 
+resource "google_project_iam_member" "artifact_registry_access" {
+  project = var.project_id
+  role    = "roles/artifactregistry.reader"
+  member  = "serviceAccount:${module.gke.service_account}"
+}
+
 resource "google_artifact_registry_repository" "docker_repo" {
   provider     = google
   location     = var.region
@@ -42,3 +48,13 @@ resource "google_artifact_registry_repository" "docker_repo" {
     team        = "devops"
   }
 }
+
+resource "google_artifact_registry_repository_iam_member" "member" {
+  project = google_artifact_registry_repository.docker_repo.project
+  location = google_artifact_registry_repository.docker_repo.location
+  repository = google_artifact_registry_repository.docker_repo.name
+  role = "roles/artifactregistry.reader"
+  member = module.workload_identity.gcp_service_account_fqn
+}
+
+
