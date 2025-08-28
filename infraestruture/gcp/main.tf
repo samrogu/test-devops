@@ -24,11 +24,16 @@ module "gke" {
   deletion_protection        = false
   http_load_balancing        = true
   service_account            = "create"
-
   identity_namespace         = "${module.project-google-apis.project_id}.svc.id.goog"
   depends_on = [
     module.project-google-apis
   ]
+}
+
+resource "google_project_iam_member" "artifact_registry_access" {
+  project = var.project_id
+  role    = "roles/artifactregistry.reader"
+  member  = "serviceAccount:${module.gke.service_account}"
 }
 
 resource "google_artifact_registry_repository" "docker_repo" {
@@ -42,3 +47,13 @@ resource "google_artifact_registry_repository" "docker_repo" {
     team        = "devops"
   }
 }
+
+resource "google_artifact_registry_repository_iam_member" "member" {
+  project = google_artifact_registry_repository.docker_repo.project
+  location = google_artifact_registry_repository.docker_repo.location
+  repository = google_artifact_registry_repository.docker_repo.name
+  role = "roles/artifactregistry.reader"
+  member = module.workload_identity.gcp_service_account_fqn
+}
+
+

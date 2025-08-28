@@ -13,5 +13,8 @@ module "project-google-apis" {
     "storage-component.googleapis.com",
     "logging.googleapis.com",
     "monitoring.googleapis.com",
+    "gkehub.googleapis.com",
+    "meshconfig.googleapis.com",
+    "mesh.googleapis.com"
   ]
 }
