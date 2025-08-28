@@ -70,8 +70,8 @@ ingress:
   hosts:
     - host: devsutest.sagurodev.com
       paths:
-        - path: /api/*
-          pathType: ImplementationSpecific
+        - path: /api
+          pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
