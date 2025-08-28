@@ -50,7 +50,7 @@ spec:
         }
     }
     parameters {
-        string(name: 'PROJECTID', defaultValue: 'testdevops-470205', description: 'PROYECTID')
+        string(name: 'PROJECTID', defaultValue: 'testdevops-470205', description: 'PROJECTID')
         string(name: 'REGION', defaultValue: 'us-central1', description: 'REGION')
     }
     environment {
@@ -120,7 +120,7 @@ spec:
                 }
             }
         }
-        stage('Deploy to GKE - ${env.BRANCH_NAME}'){
+        stage('Deploy to GKE'){
             steps{
                 sh "gcloud container clusters get-credentials gke-test-1 --project ${PROJECTID} --zone ${REGION}"
                 script {
