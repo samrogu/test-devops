@@ -125,15 +125,19 @@ spec:
                 sh "gcloud container clusters get-credentials gke-test-1 --project ${PROJECTID} --zone ${REGION}"
                 script {
                     def namespace = ''
+                    def domainapp = ''
                     if (env.BRANCH_NAME ==~ /PR-.*/) {
                         error("This is a PR branch. Deployment is not allowed.")
                     } else if (env.BRANCH_NAME == 'main') {
+                        domainapp = 'devsuprod'
                         namespace = 'production'
                     } else if (env.BRANCH_NAME == 'qa') {
                         namespace = 'qa'
                     } else if (env.BRANCH_NAME == 'dev') {
+                        domainapp = 'devsutest'
                         namespace = 'development'
                     }
+                    sh "sed -i 's/appdomain/'${domainapp}'/g' k8s-app/values.yaml"
                     sh "helm upgrade --install test-devops ./k8s-app --set image.tag=${BUILD_NUMBER} --namespace=${namespace} --wait"
                 }
             }
