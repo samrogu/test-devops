@@ -68,7 +68,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: devsutest.sagurodev.com
+    - host: appdomain.sagurodev.com
       paths:
         - path: /api
           pathType: Prefix
