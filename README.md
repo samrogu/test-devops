@@ -11,6 +11,7 @@
 
 ![Diagrama de arquitectura](/docs/arquitectura.png)
 
+
 # Estructaura del proyecto:
 ## **demo-devops-java**:  contienel codigo fuente e internament el dockerfile
 
@@ -23,7 +24,7 @@
  ![Diagrama de Network](/docs/network.png)
 ## GKE
  ![Diagrama de gke](/docs/gke.png)
- ![Diagrama de workloads](/docs/gke.png)
+ ![Diagrama de workloads](/docs/workloads.png)
 
 ## ALB
  ![Diagrama de alb](/docs/alb.png)
@@ -37,5 +38,50 @@
 ## Para el pipeline, se usan las herramientas: maven, sonarcloud, Kaniko para compilar la imagen, trivy para escanear la imagen, helm para desplegar, gcloud para obtener las credenciales necesarias.
 
 
+## Sonar Cloud
+
+![img](/docs/sonarcloud.png)
 
 
+## Recurso Sobre Kubernetes dev:
+ ![Diagrama de k8s dev](/docs/k8s-dev.png)
+
+
+## Recurso Sobre Kubernetes Prod:
+ ![Diagrama de k8s prod](/docs/k8s-prod.png)
+
+
+## Recurso ING Kubernetes Dev/Prod:
+ ![Diagrama de ings prod](/docs/ings.png)
+
+
+## Salidas Terraform
+ ![Diagrama de state tf prod](/docs/terraform-list.png)
+
+
+## QA Namespaces Terraform:
+### Agrego namespaces qa, para poder obtner una salida de terraform:
+ ![Diagrama de state tf prod](/docs/terraform-list.png)
+ ![Diagrama de state tf prod](/docs/tfplan1.png)
+ ![Diagrama de state tf prod](/docs/plan2.png)
+
+### Aplicando namespaces qa, para poder obtner una salida de terraform:
+ ![Diagrama de state tf prod](/docs/tfapply.png)
+  ![Diagrama de state tf prod](/docs/tfapply2.png)
+
+### En el archivo que esta en **infraestructure/gcp/TerraformState.txt**  esta el estado de toda la implementacion
+
+
+
+### Si se quiere ejecutar los archivos es necesario tener un buket en gcp para poder asociar y resguardar el esdado.
+
+```
+# Ejecutar terraform
+terraform init
+
+# Planear
+terraform plan
+
+# Applicar (--auto-approve si se quiere aplicar sin que pida aprobacion del ejecutor)
+terraform apply --auto-approve
+```
