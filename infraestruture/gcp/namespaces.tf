@@ -11,7 +11,17 @@ resource "kubernetes_namespace" "development" {
     name = "development"
   }
 }
-
+resource "kubernetes_namespace" "qa" {
+  metadata {
+    annotations = {
+      name = "qa"
+    }
+    labels = {
+      app = "qa"
+    }
+    name = "qa"
+  }
+}
 
 resource "kubernetes_namespace" "production" {
   metadata {
